@@ -116,3 +116,24 @@ func TestLabelValues(t *testing.T) {
 	expected := []string{"test", "BGP", "6", "in", "out", "bar"}
 	assert.Equal(t, expected, values)
 }
+
+func TestBMPExportedAsProtocolUp(t *testing.T) {
+	s := NewDefaultLabelStrategy(false, "")
+	e := NewGenericProtocolMetricExporter("bird_protocol", true, s)
+	p := protocol.NewProtocol("bmp1", protocol.BMP, "", 60)
+	p.Up = 1
+
+	ch := make(chan prometheus.Metric, 64)
+	e.Export(p, ch, true)
+	close(ch)
+
+	found := false
+	for m := range ch {
+		if !strings.Contains(m.Desc().String(), `"bird_protocol_up"`) {
+			continue
+		}
+		found = true
+		assert.Equal(t, []string{"bmp1", "BMP", "", "", ""}, s.LabelValues(p))
+	}
+	require.True(t, found, "no bird_protocol_up metric for a BMP protocol")
+}

@@ -433,6 +433,18 @@ func TestRPKIUp(t *testing.T) {
 	assert.IntEqual("up", 1, x.Up, t)
 }
 
+func TestBMPUp(t *testing.T) {
+	data := "bmp1       BMP        ---        up     2026-11-22 14:34:58  Established"
+	p := ParseProtocols([]byte(data), "")
+	assert.IntEqual("protocols", 1, len(p), t)
+
+	x := p[0]
+	assert.StringEqual("name", "bmp1", x.Name, t)
+	assert.IntEqual("proto", int(protocol.BMP), int(x.Proto), t)
+	assert.StringEqual("state", "Established", x.State, t)
+	assert.IntEqual("up", 1, x.Up, t)
+}
+
 func TestChannelParsedFromRawSocketReplyCode(t *testing.T) {
 	// BIRD prefixes the first line of every reply block with its code
 	// ("1006-") and only uses a leading space for continuation lines. For

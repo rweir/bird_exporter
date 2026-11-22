@@ -141,6 +141,8 @@ func protoString(p *protocol.Protocol) string {
 		return "RPKI"
 	case protocol.BFD:
 		return "BFD"
+	case protocol.BMP:
+		return "BMP"
 	}
 
 	return ""

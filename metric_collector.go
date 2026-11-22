@@ -74,6 +74,7 @@ func exportersForDefault(c *client.BirdClient, descriptionLabels bool) map[proto
 		protocol.Static: {e},
 		protocol.Babel:  {e},
 		protocol.RPKI:   {e},
+		protocol.BMP:    {e},
 		protocol.BFD:    {metrics.NewBFDExporter(c)},
 	}
 }

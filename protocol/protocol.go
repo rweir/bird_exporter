@@ -10,6 +10,7 @@ const (
 	Babel         = Proto(32)
 	RPKI          = Proto(64)
 	BFD           = Proto(128)
+	BMP           = Proto(256)
 )
 
 type Proto int

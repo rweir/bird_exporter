@@ -56,6 +56,7 @@ var (
 	enableBabel      = flag.Bool("proto.babel", true, "Enables metrics for protocol Babel")
 	enableRPKI       = flag.Bool("proto.rpki", true, "Enables metrics for protocol RPKI")
 	enableBFD        = flag.Bool("proto.bfd", true, "Enables metrics for protocol BFD")
+	enableBMP        = flag.Bool("proto.bmp", true, "Enables metrics for protocol BMP")
 	// pre bird 2.0
 	bird6Socket            = flag.String("bird.socket6", "/var/run/bird6.ctl", "Socket to communicate with bird6 routing daemon (not compatible with -bird.v2)")
 	birdEnabled            = flag.Bool("bird.ipv4", true, "Get protocols from bird (not compatible with -bird.v2)")
@@ -251,6 +252,9 @@ func enabledProtocols() protocol.Proto {
 	}
 	if *enableBFD {
 		res |= protocol.BFD
+	}
+	if *enableBMP {
+		res |= protocol.BMP
 	}
 
 	return res
